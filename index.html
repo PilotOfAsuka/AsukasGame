@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 		<title>CardForge</title>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="CardForge">
+		<meta name="theme-color" content="#06180f">
 		<style>
 html, body, #canvas {
 	margin: 0;
@@ -11,9 +15,21 @@ html, body, #canvas {
 	border: 0;
 }
 
+html, body {
+	width: 100%;
+	height: 100%;
+	overscroll-behavior: none;
+}
+#safe-area-probe {
+	position: fixed;
+	inset: 0;
+	padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+	visibility: hidden;
+	pointer-events: none;
+}
 body {
 	color: white;
-	background-color: black;
+	background-color: #06180f;
 	overflow: hidden;
 	touch-action: none;
 }
@@ -92,9 +108,11 @@ body {
 		</style>
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
+<link rel="manifest" href="index.manifest.json">
 
 	</head>
 	<body>
+		<div id="safe-area-probe" aria-hidden="true"></div>
 		<canvas id="canvas">
 			Your browser does not support the canvas tag.
 		</canvas>
@@ -109,9 +127,23 @@ body {
 			<div id="status-notice"></div>
 		</div>
 
+		<script>
+		// CSS pixels, not physical display pixels. Godot converts these to its UI coordinates.
+		window.cardforgeSafeArea = function () {
+			const probe = document.getElementById('safe-area-probe');
+			const canvas = document.getElementById('canvas');
+			const style = getComputedStyle(probe);
+			const rect = canvas.getBoundingClientRect();
+			return JSON.stringify([
+				parseFloat(style.paddingLeft) || 0, parseFloat(style.paddingTop) || 0,
+				parseFloat(style.paddingRight) || 0, parseFloat(style.paddingBottom) || 0,
+				rect.width, rect.height
+			]);
+		};
+		</script>
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":true,"fileSizes":{"index.pck":3244640,"index.wasm":38057390},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":true,"fileSizes":{"index.pck":3257072,"index.wasm":38057390},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"index.service.worker.js"};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
