@@ -1,6 +1,6 @@
 # 📝 История изменений CardForge
 
-Подробные сведения и файлы Android доступны в [GitHub Releases](https://github.com/PilotOfAsuka/AsukasGame/releases).
+Подробные сведения и файлы Android доступны в [GitHub Releases](https://github.com/PilotOfAsuka/CardForge/releases).
 
 ## [0.14.0] — 2026-10-26
 
@@ -11,7 +11,7 @@
 - Одиночные режимы сохранены.
 - **Совместимость:** для мультиплеера всем участникам необходимо обновить игру до актуальной версии.
 
-[Релиз 0.14.0](https://github.com/PilotOfAsuka/AsukasGame/releases/tag/v0.14.0)
+[Релиз 0.14.0](https://github.com/PilotOfAsuka/CardForge/releases/tag/v0.14.0)
 
 ## [0.13.0] — 2026-10-21
 
@@ -21,7 +21,7 @@
 - Адрес сервера перенесён в общие настройки.
 - APK публикуется в GitHub Releases; бот отправляет ссылку и описание обновления, не сохраняя файл на игровом сервере.
 
-[Релиз 0.13.0](https://github.com/PilotOfAsuka/AsukasGame/releases/tag/v0.13.0)
+[Релиз 0.13.0](https://github.com/PilotOfAsuka/CardForge/releases/tag/v0.13.0)
 
 ---
 
