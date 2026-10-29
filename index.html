@@ -28,7 +28,7 @@ html, body {
 	pointer-events: none;
 }
 body {
-	color: white;
+	color: #f0f4e8;
 	background-color: #06180f;
 	overflow: hidden;
 	touch-action: none;
@@ -54,7 +54,7 @@ body {
 }
 
 #status {
-	background-color: #242424;
+	background: radial-gradient(ellipse at 45% 30%, #123c2d, #06180f);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -88,15 +88,17 @@ body {
 
 #status-progress {
 	bottom: 10%;
-	width: 50%;
+	width: min(360px, 75%);
+	height: 8px;
+	accent-color: #b8dda5;
 	margin: 0 auto;
 }
 
 #status-notice {
-	background-color: #5b3943;
+	background-color: #123c2d;
 	border-radius: 0.5rem;
-	border: 1px solid #9b3943;
-	color: #e0e0e0;
+	border: 1px solid #f5a498;
+	color: #f0f4e8;
 	font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
 	line-height: 1.3;
 	margin: 0 2rem;
@@ -114,16 +116,17 @@ body {
 	<body>
 		<div id="safe-area-probe" aria-hidden="true"></div>
 		<canvas id="canvas">
-			Your browser does not support the canvas tag.
+			Браузер не поддерживает игровой экран. Откройте CardForge в современном браузере.
 		</canvas>
 
 		<noscript>
-			Your browser does not support JavaScript.
+			Для запуска CardForge включите JavaScript.
 		</noscript>
 
 		<div id="status">
 			<img id="status-splash" class="show-image--true fullsize--true use-filter--true" src="index.png" alt="">
-			<progress id="status-progress"></progress>
+			<div id="loading-copy" role="status" aria-live="polite">CardForge · загрузка игры…</div>
+			<progress id="status-progress" aria-label="Загрузка игры"></progress>
 			<div id="status-notice"></div>
 		</div>
 
@@ -143,7 +146,7 @@ body {
 		</script>
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":true,"fileSizes":{"index.pck":3181720,"index.wasm":38057390},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"index.service.worker.js"};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":true,"fileSizes":{"index.pck":3254036,"index.wasm":38057390},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"index.service.worker.js"};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -167,6 +170,7 @@ const engine = new Engine(GODOT_CONFIG);
 		statusOverlay.style.visibility = 'visible';
 		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
 		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		document.getElementById('loading-copy').style.display = mode === 'progress' ? 'block' : 'none';
 		statusMode = mode;
 	}
 
@@ -188,7 +192,7 @@ const engine = new Engine(GODOT_CONFIG);
 		} else if (typeof err === 'string') {
 			setStatusNotice(err);
 		} else {
-			setStatusNotice('An unknown error occurred.');
+			setStatusNotice('Не удалось запустить игру. Перезагрузите страницу.');
 		}
 		setStatusMode('notice');
 		initializing = false;
@@ -226,7 +230,7 @@ const engine = new Engine(GODOT_CONFIG);
 			});
 		} else {
 			// Display the message as usual
-			const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
+			const missingMsg = 'Браузер не поддерживает нужные возможности игры. Обновите браузер или откройте CardForge на другом устройстве.\n';
 			displayFailureNotice(missingMsg + missing.join('\n'));
 		}
 	} else {
